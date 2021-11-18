@@ -108,7 +108,7 @@
       <div class="row pull-right">
         <div class="col-sm-12">
         <button class="btn btn-warning btnCancelUser"><i class="glyphicon glyphicon-remove"></i>&nbsp;CANCEL</button>
-        <button class="btn btn-success btnSubmitUser"><i class="glyphicon glyphicon-check"></i>&nbsp;SUBMIT</button>
+        <button class="btn btn-success btnSubmitUser">SUBMIT</button>
         </div>    
       </div>
   </div>

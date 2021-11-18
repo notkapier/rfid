@@ -1,6 +1,8 @@
+
+
 $("#rfid").css({
-   position: 'absolute',
-   top: '-100px'
+    position: 'absolute',
+    top: '-100px'
 });
 
 window.onload = function() {
@@ -60,6 +62,8 @@ $('.btntype').on('click',function(){
   let type = $(this).attr('log');
   $(".active_login").removeClass('active_login');
   $('#type').val(type);
+  console.log(type);
+
   $(this).addClass('active_login');
   $('#rfid').focus();
 });
