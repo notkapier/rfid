@@ -1,0 +1,3 @@
+$('.bntlogin').on('click',function(){
+
+});

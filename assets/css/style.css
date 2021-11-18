@@ -1,0 +1,32 @@
+.digital-clock { 
+    font-size: 3em; /*To change the size of the numbers*/
+    max-width: 250px;  /*To change the widt of the clock*/
+    text-align: center; 
+    border: 2px solid black; /*To change the border around the clock*/
+    border-radius: 20px; /*To change how round the edges are*/
+    background-color: white; /*To change the background color of the clock*/
+}
+
+.clock_container {
+ background: #343a40;
+ height:200px;
+}
+
+.clock {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    /*color: #17D4FE;*/
+    color: #fff;
+    font-size: 70px !important;
+    font-family: Orbitron;
+    letter-spacing: 0px;
+}
+input {
+    text-align: center;
+}
+.active_login {
+    background-color: green;
+    color: #fff;
+}
