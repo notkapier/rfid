@@ -110,10 +110,10 @@
 
               <?php if($this->session->flashdata('status')){ 
                  $test = explode('\r\n',$this->session->flashdata('status'));            
-               if(!empty($test[1])){?>
+               if(!empty($test[0])){?>
                 <div class="alert alert-warning alert-dismissible" role="alert">
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <strong>Message: </strong><?php echo $test[1];?>
+                  <strong>Message: </strong><?php echo $test[0];?>
                 </div>
               <?php }
               } ?>
@@ -174,12 +174,12 @@
      $test = explode('\r\n',$this->session->flashdata('status')); ?>
      
      <script type="text/javascript">
-        $('#dp').attr('src', '<?php echo $test[5];?>');
-        $("#tb_name").val('<?php echo $test[2];?>');
-        $("#tb_position").val('<?php echo $test[3];?>');
-        $("#tb_department").val('<?php echo $test[4];?>');
-	      $("[log='<?php echo $test[0]?>']").trigger('click');
-      </script>
+            $('#dp').attr('src', '<?php echo $test[4];?>');
+            $("#tb_name").val('<?php echo $test[1];?>');
+            $("#tb_position").val('<?php echo $test[2];?>');
+            $("#tb_department").val('<?php echo $test[3];?>');
+			$("#<?php echo $test[5]?>").trigger('click');
+          </script>';
      <?php } ?>
   </body>
 </html>

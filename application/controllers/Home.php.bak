@@ -90,7 +90,7 @@ class Home extends CI_Controller {
 			// 	'department' => $user->department,
 			// 	 );
 			// $this->display($status);
-			$data = $type . '\r\n'. $status .'\r\n'. $user->firstname . ' ' . $user->middlename . ' ' . $user->lastname .'\r\n'. $user->position .'\r\n'. $user->department .'\r\n'. $user->location;
+			$data = $status .'\r\n'. $user->firstname . ' ' . $user->middlename . ' ' . $user->lastname .'\r\n'. $user->position .'\r\n'. $user->department .'\r\n'. $user->location;
 			$this->session->set_flashdata('status', $data);
 		}
 		else{

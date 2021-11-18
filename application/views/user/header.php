@@ -53,15 +53,15 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="<?php echo base_url('/home/index');?>">Gate Pass</a>
+      <a class="navbar-brand" href="<?php echo base_url('/home/index');?>"><i class="glyphicon glyphicon-home" style="font-size:15px;"></i>&nbsp;Home</a>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-       <li><a href="<?php echo base_url('/user/index');?>">Daily Log</a></li>
-        <li><a href="<?php echo base_url('/user/myaccount');?>">My Account</a></li>
+       <li><a href="<?php echo base_url('/user/index');?>"><i class="glyphicon glyphicon-book" style="font-size:15px;"></i>&nbsp;Daily Log</a></li>
+        <li><a href="<?php echo base_url('/user/myaccount');?>"><i class="glyphicon glyphicon-cog" style="font-size:15px;"></i>&nbsp;My Account</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a type="button" class="btnlogout">Logout</a></li>
+        <li><a type="button" style="cursor:pointer;" class="btnlogout"><i class="glyphicon glyphicon-log-out" style="font-size:15px;cursor:pointer;"></i>&nbsp;Logout</a></li>
       </ul>
       </div><!--/.nav-collapse -->
     </div>

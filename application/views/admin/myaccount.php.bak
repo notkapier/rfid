@@ -20,7 +20,7 @@
           <hr>
           <div class="row pull-right">
             <div class="col-sm-12">
-            <button class="btn btn-success btnSubmitAdmin"><i class="glyphicon glyphicon-check"></i>&nbsp;SUBMIT</button>
+            <button class="btn btn-success btnSubmitAdmin">Submit</button>
             </div>    
           </div>
       </div>

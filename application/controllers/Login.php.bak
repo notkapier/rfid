@@ -41,7 +41,7 @@ class Login extends CI_Controller {
 			$user = $this->m_login->find_user($username);
 
 			if(!$user){
-				$this->session->set_flashdata('status','Invalid Login');
+				$this->session->set_flashdata('Error','Invalid Login');
 				return redirect('home/index');
 			}
 			else{
