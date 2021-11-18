@@ -110,12 +110,18 @@
 
               <?php if($this->session->flashdata('status')){ 
                  $test = explode('\r\n',$this->session->flashdata('status'));            
-               if(!empty($test[1])){?>
+               if((!empty($test[1])) && (count($test)>1) ){?>
                 <div class="alert alert-warning alert-dismissible" role="alert">
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                   <strong>Message: </strong><?php echo $test[1];?>
                 </div>
               <?php }
+		else {?>
+		 <div class="alert alert-warning alert-dismissible" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <strong>Message: </strong><?php echo $this->session->flashdata('status');?>
+                </div>
+		<?php } 
               } ?>
               
 
