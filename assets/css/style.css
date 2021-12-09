@@ -30,3 +30,19 @@ input {
     background-color: green;
     color: #fff;
 }
+
+.underline_text {
+      border-bottom: solid 2px #000000;
+      display: inline;
+      padding-bottom: 3px;
+}
+
+.customTable > tbody > th,  .customTable >  tbody > td {
+  border: 1px solid black;
+  border-collapse: collapse;
+
+}
+
+.text-left {
+    text-align: left;
+}

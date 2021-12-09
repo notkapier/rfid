@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 17, 2021 at 10:07 AM
+-- Generation Time: Dec 09, 2021 at 02:31 AM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.2.34
 
@@ -33,19 +33,23 @@ CREATE TABLE `daily_log` (
   `login_am` datetime NOT NULL DEFAULT current_timestamp(),
   `logout_am` datetime NOT NULL,
   `login_pm` datetime NOT NULL,
-  `logout_pm` datetime NOT NULL
+  `logout_pm` datetime NOT NULL,
+  `remarks` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `daily_log`
 --
 
-INSERT INTO `daily_log` (`logid`, `userid`, `login_am`, `logout_am`, `login_pm`, `logout_pm`) VALUES
-(1, 9, '2021-11-17 04:53:13', '2021-11-17 04:53:20', '2021-11-17 04:53:24', '2021-11-17 04:53:29'),
-(2, 9, '2021-10-17 04:53:13', '2021-10-17 04:53:20', '2021-10-17 04:53:24', '2021-10-17 04:53:29'),
-(3, 9, '2020-01-17 04:53:13', '2020-01-17 04:53:20', '2020-01-17 04:53:24', '2020-01-17 04:53:29'),
-(4, 9, '2020-02-17 04:53:13', '2020-02-17 04:53:20', '2020-02-17 04:53:24', '2020-02-17 04:53:29'),
-(5, 10, '2021-11-17 10:04:04', '2021-11-17 10:04:11', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `daily_log` (`logid`, `userid`, `login_am`, `logout_am`, `login_pm`, `logout_pm`, `remarks`) VALUES
+(2, 9, '2021-10-17 04:53:13', '2021-10-17 04:53:20', '2021-10-17 04:53:24', '2021-10-17 04:53:29', NULL),
+(3, 9, '2020-01-17 04:53:13', '2020-01-17 04:53:20', '2020-01-17 04:53:24', '2020-01-17 04:53:29', NULL),
+(4, 9, '2020-02-17 04:53:13', '2020-02-17 04:53:20', '2020-02-17 04:53:24', '2020-02-17 04:53:29', NULL),
+(5, 9, '0000-00-00 00:00:00', '2021-11-17 10:04:11', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'b'),
+(6, 9, '2021-11-18 07:31:27', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
+(7, 9, '2021-11-01 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'a'),
+(8, 9, '2021-11-02 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'b'),
+(9, 9, '2021-11-03 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'c');
 
 -- --------------------------------------------------------
 
@@ -78,7 +82,7 @@ CREATE TABLE `tbluser` (
 
 INSERT INTO `tbluser` (`id`, `email`, `password`, `firstname`, `middlename`, `lastname`, `rfid`, `datecreated`, `createdby`, `modifieddate`, `modifiedby`, `position`, `department`, `location`, `usertype`, `deactivated`) VALUES
 (1, 'admin@localhost.com', '$2y$10$O2UedSlw2G2RRle16SL2nuV2cW5f3j0PO0xtJ/YninHFtzpkSeZ0K', 'system', 'sa', 'admin', '0', '2021-09-19 16:52:49', 1, '2021-11-17 11:31:12', NULL, NULL, NULL, NULL, 1, 0),
-(9, 'lyca@gmail.com', '$2y$10$UW.iy/aAkXtDaN4rl.Dr3OuioERCK/5tJtX0nqz/pbmuNQgUQVokG', 'lyca', 'mamauag', 'banguilan', '0841682880', '2021-11-17 02:55:09', 1, '2021-11-17 10:01:15', 1, 'Manager', 'Finance', 'http://localhost/rfid2/assets/upload/198652970_503610534202585_4277288681848675400_n.jpg', 2, 0),
+(9, 'lyca@gmail.coma', '$2y$10$UW.iy/aAkXtDaN4rl.Dr3OuioERCK/5tJtX0nqz/pbmuNQgUQVokG', 'lyca', 'mamauag', 'banguilan', '0841682880', '2021-11-17 02:55:09', 1, '2021-11-17 10:12:36', 1, 'Manager', 'Finance', 'http://localhost/rfid2/assets/upload/198652970_503610534202585_4277288681848675400_n.jpg', 2, 0),
 (10, 'bryan@localhost.com', '$2y$10$fWdBrhzAA6buUlFdn0GrXuTOfAC0g8Sh8eFE6tiiojCC8wMBbGeIe', 'bryan', 'banguilan', 'mamauag', '0859404274', '2021-11-17 02:57:55', 1, '2021-11-17 10:57:57', NULL, 'Secretary', 'Finance', 'http://localhost/rfid2/assets/upload/sig.png', 2, 0);
 
 -- --------------------------------------------------------
@@ -130,7 +134,7 @@ ALTER TABLE `user_type`
 -- AUTO_INCREMENT for table `daily_log`
 --
 ALTER TABLE `daily_log`
-  MODIFY `logid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `logid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `tbluser`

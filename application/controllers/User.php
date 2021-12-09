@@ -33,7 +33,17 @@ class User extends CI_Controller {
 		
 		// $data['days'] = cal_days_in_month( 0, $data['month'][0]['month'], $data['year'][0]['year']);
 		if(!empty($data['year'])){
-			$data['logs'] = $this->M_home->getLogs($data['year'][0]['year'], $data['month'][0]['month'], $userid);	
+			$month = $data['month'][0]['month'];
+			$year = $data['year'][0]['year'];
+			$data['logs'] = $this->M_home->getLogs($year, $month, $userid);	
+			
+			$start_date = date("$year-$month-01");
+			$end_date = date("$year-$month-t");
+
+			$data['logs2'] = $this->M_home->getLogsV2($year, $month,$userid, $start_date,$end_date);
+
+			// display($data);
+
 		}
 		$this->load->view('user/header',$data);
 		$this->load->view('user/log');
@@ -128,5 +138,43 @@ class User extends CI_Controller {
 	function logout(){
 		$this->session->sess_destroy();
 		echo json_encode(array("url" =>base_url()));
+	}
+	function saveLogChanges(){
+		$insertData;
+		$updateData;
+
+		$this->db->trans_start(); 
+		foreach ($_POST as $key => $value) {
+			$info = explode('_', $key);
+			if($info[1]==0){
+				$insertData = array(
+					'userid' => $this->session->userdata('id'),
+					'login_am' => $info[2]. ' 00:00:00',
+					'remarks' =>$value,
+					 );
+				$this->db->insert('daily_log',$insertData);
+			}
+			else{
+				$logid = $info[1];
+				$updateData = array(
+					'remarks' => $value,
+					 );
+				$this->db->where('logid', $logid);
+				$this->db->update('daily_log',$updateData);
+			}
+		}
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === FALSE) {
+		    $this->db->trans_rollback();
+		   echo json_encode(array("status" => 'error', 'type'=>'Error while updating records'));
+		} 
+		else {
+
+		    $this->db->trans_commit();
+		    $this->session->set_flashdata('success', 'Successfully created new school year');
+		     echo json_encode(array("status" => 'success', 'type'=>'Successfully created new school year'));
+		    
+		}
 	}
 }

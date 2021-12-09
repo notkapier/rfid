@@ -23,3 +23,22 @@ $(document).on('change','#dd_year, #dd_month, #dd_user',function(){
 		},
 	});
 })
+
+
+$(document).on('click','.btnReportView',function(){
+	$(this).addClass('btnTableView');
+	$(this).removeClass('btnReportView');
+	$(this).text('Table View');
+
+	$('.myTable').hide();
+	$('.myReport').show();
+});
+
+$(document).on('click','.btnTableView',function(){
+	$(this).removeClass('btnTableView');
+	$(this).addClass('btnReportView');
+	$(this).text('Report View');
+
+	$('.myReport').hide();
+	$('.myTable').show();
+});
