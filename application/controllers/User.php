@@ -28,14 +28,43 @@ class User extends CI_Controller {
 	public function index()
 	{
 		$userid = $this->session->userdata('id');
-		$data['year'] = $this->db->query("SELECT DISTINCT YEAR(login_am) as year FROM daily_log where userid = $userid order by year DESC")->result_array();
-		$data['month'] = $this->db->query("SELECT DISTINCT MONTH(login_am) as month, MONTHNAME(login_am) as monthname FROM daily_log  where userid = $userid  order by month desc")->result_array();
+		$data['year'] = $this->db->query("SELECT DISTINCT
+		    (YEAR(dt_date)) AS year
+		FROM
+		    (SELECT 
+		        CASE
+		                WHEN (YEAR(login_am) <> '0000') THEN DATE(login_am)
+		                WHEN (YEAR(login_pm) <> '0000') THEN DATE(login_pm)
+		                WHEN (YEAR(logout_am) <> '0000') THEN DATE(logout_am)
+		                ELSE DATE(logout_pm)
+		            END AS 'dt_date'
+		    FROM
+		        daily_log
+		    WHERE
+		        userid = $userid) AS x
+		ORDER BY year DESC")->result_array();
+		$data['month'] = $this->db->query("SELECT DISTINCT
+		    (MONTH(dt_date)) AS month, MONTHNAME(dt_date) as monthname
+		FROM
+		    (SELECT 
+		        CASE
+		                WHEN (YEAR(login_am) <> '0000') THEN DATE(login_am)
+		                WHEN (YEAR(login_pm) <> '0000') THEN DATE(login_pm)
+		                WHEN (YEAR(logout_am) <> '0000') THEN DATE(logout_am)
+		                ELSE DATE(logout_pm)
+		            END AS 'dt_date'
+		    FROM
+		        daily_log
+		    WHERE
+		        userid = $userid) AS x
+		ORDER BY month DESC")->result_array();
 		
 		// $data['days'] = cal_days_in_month( 0, $data['month'][0]['month'], $data['year'][0]['year']);
 		if(!empty($data['year'])){
-			$month = $data['month'][0]['month'];
+			$month = str_pad($data['month'][0]['month'],2,0,STR_PAD_LEFT);
+			// display($month);
 			$year = $data['year'][0]['year'];
-			$data['logs'] = $this->M_home->getLogs($year, $month, $userid);	
+			// $data['logs'] = $this->M_home->getLogs($year, $month, $userid);	
 			
 			$start_date = date("$year-$month-01");
 			$end_date = date("$year-$month-t");
@@ -59,24 +88,16 @@ class User extends CI_Controller {
 		}
 	}
 	function getLogs(){
+		// display($_POST);
 		$year = $_GET['year'];
-        $month = $_GET['month'];
-        $user = $this->session->userdata('id');
+		$month = $_GET['month'];
+        $month2 = str_pad($_GET['month'],2,0,STR_PAD_LEFT);
+        $userid = $this->session->userdata('id');
         $invoker = $_GET['invoker'];
-		$data['year'] = $this->db->query("SELECT DISTINCT YEAR(login_am) as year FROM daily_log where userid = $user order by year DESC")->result_array();
-		$data['month'] = $this->db->query("SELECT DISTINCT MONTH(login_am) as month, MONTHNAME(login_am) as monthname FROM daily_log where userid = $user order by month desc")->result_array();
-		$data['logs'] = $this->M_home->getLogs($year, $month, $user);
-		$data['currentUser'] = $user;
-		$data['currentMonth'] = $month;
-		$data['currentYear'] = $year;
-		if ((empty($data['logs'])) && ($invoker=='year')){
-			$data['currentUser'] = 0;
-			$data['logs'] = $this->M_home->getLogs($year, $month, 0);
-			if(empty($data['logs'])){
-				$data['currentMonth'] = 0;
-				$data['logs'] = $this->M_home->getLogs($year, 0, 0);
-			}
-		}
+		$start_date = date("$year-$month2-01");
+		$end_date = date("$year-$month2-t");
+
+		$data['logs2'] = $this->M_home->getLogsV2($year, $month,$userid, $start_date,$end_date);
 		$this->load->view('user/logTable',$data);
 	}
 	function myaccount(){
@@ -137,7 +158,7 @@ class User extends CI_Controller {
 	}
 	function logout(){
 		$this->session->sess_destroy();
-		echo json_encode(array("url" =>base_url()));
+		echo json_encode(array("url" =>base_url('/login')));
 	}
 	function saveLogChanges(){
 		$insertData;
@@ -172,8 +193,8 @@ class User extends CI_Controller {
 		else {
 
 		    $this->db->trans_commit();
-		    $this->session->set_flashdata('success', 'Successfully created new school year');
-		     echo json_encode(array("status" => 'success', 'type'=>'Successfully created new school year'));
+		    $this->session->set_flashdata('Success', 'Successfully updated records');
+		     echo json_encode(array("url" =>base_url('/user')));
 		    
 		}
 	}

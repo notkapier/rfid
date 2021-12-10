@@ -27,8 +27,34 @@ class Admin extends CI_Controller {
     }
 	public function index()
 	{
-		$data['year'] = $this->db->query("SELECT DISTINCT YEAR(login_am) as year FROM daily_log order by year DESC")->result_array();
-		$data['month'] = $this->db->query("SELECT DISTINCT MONTH(login_am) as month, MONTHNAME(login_am) as monthname FROM daily_log order by month desc")->result_array();
+		$data['year'] = $this->db->query("SELECT DISTINCT
+		    (YEAR(dt_date)) AS year
+		FROM
+		    (SELECT 
+		        CASE
+		                WHEN (YEAR(login_am) <> '0000') THEN DATE(login_am)
+		                WHEN (YEAR(login_pm) <> '0000') THEN DATE(login_pm)
+		                WHEN (YEAR(logout_am) <> '0000') THEN DATE(logout_am)
+		                ELSE DATE(logout_pm)
+		            END AS 'dt_date'
+		    FROM
+		        daily_log
+		    ) AS x
+		ORDER BY year DESC")->result_array();
+		$data['month'] = $this->db->query("SELECT DISTINCT
+		    (MONTH(dt_date)) AS month, MONTHNAME(dt_date) as monthname
+		FROM
+		    (SELECT 
+		        CASE
+		                WHEN (YEAR(login_am) <> '0000') THEN DATE(login_am)
+		                WHEN (YEAR(login_pm) <> '0000') THEN DATE(login_pm)
+		                WHEN (YEAR(logout_am) <> '0000') THEN DATE(logout_am)
+		                ELSE DATE(logout_pm)
+		            END AS 'dt_date'
+		    FROM
+		        daily_log
+		 ) AS x
+		ORDER BY month DESC")->result_array();
 		$data['user'] = $this->db->query("select id, concat_ws(' ',firstname, middlename, lastname) as fullname from tbluser where usertype = 2")->result_array();
 		// $data['days'] = cal_days_in_month( 0, $data['month'][0]['month'], $data['year'][0]['year']);
 		if(!empty($data['year'])){

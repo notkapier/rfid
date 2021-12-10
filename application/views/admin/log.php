@@ -18,7 +18,7 @@
             </select>  
           </div>
           <div class="col-sm-2">
-            <select id="dd_user" class="form-control">
+            <select class="select2 form-control" id="dd_user">
               <option value="0">All</option>
                <?php foreach($user as $row){?>
               <option value="<?php echo $row['id'];?>"><?php echo $row['fullname'];?></option>
