@@ -84,6 +84,16 @@ $(document).on('click','.btnCancelUser',function(){
 	$('.usersForm').addClass('hide');
 	$('.btnadduser').show();
 	$('#user_id').val(0);
+
+  $('#firstname').val('');
+  $('#middlename').val('');
+  $('#lastname').val('');
+  $('#email').val('');
+  $('#position').val('');
+  $('#department').val('');
+  $('#rfid').val('');
+
+
 });
 
 $(document).on('click','.btnEditUser',function(){
@@ -115,3 +125,53 @@ $(document).on('click','.btnEditUser',function(){
 		},
 	})
 });
+
+$(document).on('click','.btnDisableUser',function(){
+  let userid = $(this).attr('userid');
+  swal({
+        title: "Disable this user?",
+        text: "Are you sure?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((proceed) => {
+        if (proceed) {
+         $.ajax({
+              url: base_url+'admin/disableUser/'+userid,
+              type: "POST",
+              dataType: "JSON",
+              success: function(data) {
+                 window.location = data.url;
+              },
+          });
+        } else {
+          swal("Message","Disabling cancelled", "warning");
+        }
+      });
+});
+
+$(document).on('click','.btnEnableUser',function(){
+  let userid = $(this).attr('userid');
+  swal({
+        title: "Enable this user?",
+        text: "Are you sure?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((proceed) => {
+        if (proceed) {
+         $.ajax({
+              url: base_url+'admin/enableUser/'+userid,
+              type: "POST",
+              dataType: "JSON",
+              success: function(data) {
+                 window.location = data.url;
+              },
+          });
+        } else {
+          swal("Message","Enabling cancelled", "warning");
+        }
+      });
+})

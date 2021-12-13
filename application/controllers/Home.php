@@ -31,7 +31,7 @@ class Home extends CI_Controller {
 		$rfid = $this->input->post('rfid');
 		$type = $this->input->post('type');
 
-		$user = $this->db->query("select * from tbluser where rfid = '$rfid'")->row();
+		$user = $this->db->query("select * from tbluser where rfid = '$rfid' and deactivated <> 1")->row();
 		$userid = $user->id;
 		$today = date('Y-m-d');
 

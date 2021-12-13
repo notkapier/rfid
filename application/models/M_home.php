@@ -55,10 +55,8 @@ class M_home extends CI_Model {
     function getLogsV2($year, $month, $userid, $start, $end){
         $sql = "
            with recursive all_dates(dt) as (
-                -- anchor
                 select '$start' dt
                     union all 
-                -- recursion with stop condition
                 select dt + interval 1 day from all_dates where dt + interval 1 day <= '$end'
             )
             select logid, userid, dt, dayname(dt) as day,day(dt) as day_numeric, login_am, logout_am, login_pm, logout_pm, remarks from all_dates ad left join

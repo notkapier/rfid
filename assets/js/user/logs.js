@@ -70,3 +70,14 @@ $(document).on('click','.btnSaveChanges',function(){
 	    });
 	}
 })
+
+$(document).on('click','.btnPrint',function(){
+	let year = $('#dd_year').val();
+	let month = $('#dd_month').val();
+
+	let request = year + '_' + month;
+    let url =  base_url + 'user/printLogs/'+request,
+	newWindow = window.open(url, "_blank");
+	newWindow.focus();
+	newWindow.print();
+})

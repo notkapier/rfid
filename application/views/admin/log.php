@@ -19,13 +19,13 @@
           </div>
           <div class="col-sm-2">
             <select class="select2 form-control" id="dd_user">
-              <option value="0">All</option>
                <?php foreach($user as $row){?>
-              <option value="<?php echo $row['id'];?>"><?php echo $row['fullname'];?></option>
+              <option <?php if($userid==$row['id']){ echo "selected"; }?> value="<?php echo $row['id'];?>"><?php echo $row['fullname'];?></option>
               <?php } ?>
             </select>  
           </div>
-          <button class="btn btn-sm pull-right btnReportView">Report View</button>
+          <button class="btn btn-sm pull-right btnPrint">Print</button>
+          <button class="btn btn-sm pull-right btn-success btnSaveChanges">Save Changes</button>  
         </div>
         <div class="row" style="padding-top: 3vh">
           <div class="col-sm-12 myTable">
@@ -66,34 +66,7 @@
             </table>
            </div>
           </div>
-          <div class="col-sm-12 myReport">
-            <div class="row">
-              <div class="col-sm-6">
-                <p><center>DAILY TIME RECORD</center></p>
-                <p  style="width: 100%">Name: <span class="underline_text">Lyca asdf asdf asdf</span>
-                <p>For the Month of: <span  class="underline_text"></span>
-                <p>Official Hours (Reg Days): <span  class="underline_text"></span>
-                <p>Arrival and Departure (Sun & Holidays): <span  class="underline_text"></span>
-              </div>
-            </div>
-            <div class="row">
-              <table class="customTable" border="1" style="border: 1px solid black;border-collapse: collapse;">
-                <tr>
-                  <td rowspan="2" style="width:50px;"><center>Day</td>
-                  <td colspan="2"  style="width:200px;">AM</td>
-                  <td colspan="2" style="width:200px;">PM</td>
-                  <td rowspan="2">Undertime Hrs/Mins</td>
-                  <td style="width: 400px;" rowspan="2">Remarks</td>
-                </tr>
-                <tr>
-                  <td>IN</td>
-                  <td>OUT</td>
-                  <td>IN</td>
-                  <td>OUT</td>
-                </tr>
-              </table>
-            </div>
-          </div>
+          <!-- <p></p> -->
         </div>
       </div>
     </div>

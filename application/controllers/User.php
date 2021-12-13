@@ -198,4 +198,21 @@ class User extends CI_Controller {
 		    
 		}
 	}
+	function printLogs($request){
+		$requestData = explode('_', $request);
+		$year = $requestData[0];
+        $month = $requestData[1];
+        $userid = $this->session->userdata('id');
+
+        $month = str_pad($month,2,0,STR_PAD_LEFT);
+        $month2 = str_pad($month,2,0,STR_PAD_LEFT);
+        $start_date = date("$year-$month2-01");
+		$end_date = date("$year-$month2-t");
+		$data['user'] = $this->db->query("select firstname, left(middlename, 1) as mi, lastname from tbluser where id = $userid")->row_array();
+		$data['month'] = date('F', mktime(0, 0, 0, $month, 10));
+		$data['year'] = $year;
+		$data['logs2'] = $this->M_home->getLogsV2($year, $month,$userid, $start_date,$end_date);
+		// display($data);
+		$this->load->view('admin/print2',$data);
+	}
 }

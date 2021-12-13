@@ -56,10 +56,19 @@ class Admin extends CI_Controller {
 		 ) AS x
 		ORDER BY month DESC")->result_array();
 		$data['user'] = $this->db->query("select id, concat_ws(' ',firstname, middlename, lastname) as fullname from tbluser where usertype = 2")->result_array();
+		$userid = $data['user'][0]['id'];
+		$month = str_pad($data['month'][0]['month'],2,0,STR_PAD_LEFT);
+		$month2 = str_pad($month,2,0,STR_PAD_LEFT);
+		$year = $data['year'][0]['year'];
+		$start_date = date("$year-$month2-01");
+		$end_date = date("$year-$month2-t");
+		$data['userid'] = $userid;
+		
 		// $data['days'] = cal_days_in_month( 0, $data['month'][0]['month'], $data['year'][0]['year']);
 		if(!empty($data['year'])){
-			$data['logs'] = $this->M_home->getLogs($data['year'][0]['year'], $data['month'][0]['month'], 0);	
+			$data['logs2'] = $this->M_home->getLogsV2($year, $month,$userid, $start_date,$end_date);
 		}
+		// display($data);
 		$this->load->view('admin/header',$data);
 		$this->load->view('admin/log');
 		$this->load->view('admin/footer');
@@ -76,24 +85,34 @@ class Admin extends CI_Controller {
 	function getLogs(){
 		$year = $_GET['year'];
         $month = $_GET['month'];
-        $user = $_GET['user'];
-        $invoker = $_GET['invoker'];
-		$data['year'] = $this->db->query("SELECT DISTINCT YEAR(login_am) as year FROM daily_log order by year DESC")->result_array();
-		$data['month'] = $this->db->query("SELECT DISTINCT MONTH(login_am) as month, MONTHNAME(login_am) as monthname FROM daily_log order by month desc")->result_array();
-		$data['user'] = $this->db->query("select id, concat_ws(' ',firstname, middlename, lastname) as fullname from tbluser where usertype = 2")->result_array();
-		$data['logs'] = $this->M_home->getLogs($year, $month, $user);
-		$data['currentUser'] = $user;
-		$data['currentMonth'] = $month;
-		$data['currentYear'] = $year;
-		if ((empty($data['logs'])) && ($invoker=='year')){
-			$data['currentUser'] = 0;
-			$data['logs'] = $this->M_home->getLogs($year, $month, 0);
-			if(empty($data['logs'])){
-				$data['currentMonth'] = 0;
-				$data['logs'] = $this->M_home->getLogs($year, 0, 0);
-			}
-		}
+        $userid = $_GET['user'];
+
+        $month = str_pad($month,2,0,STR_PAD_LEFT);
+        $month2 = str_pad($month,2,0,STR_PAD_LEFT);
+        $start_date = date("$year-$month2-01");
+		$end_date = date("$year-$month2-t");
+
+		$data['logs2'] = $this->M_home->getLogsV2($year, $month,$userid, $start_date,$end_date);
+		// display($data);
 		$this->load->view('admin/logTable',$data);
+
+	}
+	function printLogs($request){
+		$requestData = explode('_', $request);
+		$year = $requestData[0];
+        $month = $requestData[1];
+        $userid = $requestData[2];
+
+        $month = str_pad($month,2,0,STR_PAD_LEFT);
+        $month2 = str_pad($month,2,0,STR_PAD_LEFT);
+        $start_date = date("$year-$month2-01");
+		$end_date = date("$year-$month2-t");
+		$data['user'] = $this->db->query("select firstname, left(middlename, 1) as mi, lastname from tbluser where id = $userid")->row_array();
+		$data['month'] = date('F', mktime(0, 0, 0, $month, 10));
+		$data['year'] = $year;
+		$data['logs2'] = $this->M_home->getLogsV2($year, $month,$userid, $start_date,$end_date);
+		// display($data);
+		$this->load->view('admin/print2',$data);
 	}
 	function users(){
 		$data['user'] = $this->db->query("select concat_ws(' ',lastname,firstname,middlename) as fullname,position,department,id,email,deactivated from tbluser where usertype = 2")->result_array();
@@ -193,6 +212,56 @@ class Admin extends CI_Controller {
 	}
 	function logout(){
 		$this->session->sess_destroy();
-		echo json_encode(array("url" =>base_url()));
+		echo json_encode(array("url" =>base_url('/login')));
+	}
+	function saveLogChanges($userid){
+		$insertData;
+		$updateData;
+
+		$this->db->trans_start(); 
+		foreach ($_POST as $key => $value) {
+			$info = explode('_', $key);
+			if($info[1]==0){
+				$insertData = array(
+					'userid' => $userid,
+					'login_am' => $info[2]. ' 00:00:00',
+					'remarks' =>$value,
+					 );
+				$this->db->insert('daily_log',$insertData);
+			}
+			else{
+				$logid = $info[1];
+				$updateData = array(
+					'remarks' => $value,
+					 );
+				$this->db->where('logid', $logid);
+				$this->db->update('daily_log',$updateData);
+			}
+		}
+		$this->db->trans_complete();
+
+		if ($this->db->trans_status() === FALSE) {
+		    $this->db->trans_rollback();
+		   echo json_encode(array("status" => 'error', 'type'=>'Error while updating records'));
+		} 
+		else {
+
+		    $this->db->trans_commit();
+		    $this->session->set_flashdata('Success', 'Successfully updated records');
+		     echo json_encode(array("url" =>base_url('/admin')));
+		    
+		}
+	}
+	function disableUser($id){
+		if($this->db->query("update tbluser set deactivated = 1 where id = $id")){
+			$this->session->set_flashdata('Success', 'Successfully disabled user');
+		     echo json_encode(array("url" =>base_url('/admin/users')));
+		}
+	}
+	function enableUser($id){
+		if($this->db->query("update tbluser set deactivated = 0 where id = $id")){
+			$this->session->set_flashdata('Success', 'Successfully enabled user');
+		     echo json_encode(array("url" =>base_url('/admin/users')));
+		}
 	}
 }
