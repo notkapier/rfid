@@ -1,5 +1,5 @@
 <main>
-    
+<link rel="icon" href="../rfid/logo.png"
     <div class="album bg-light">
       <div class="usersForm container">
       <div class="col-sm-12">
@@ -20,7 +20,7 @@
           <hr>
           <div class="row pull-right">
             <div class="col-sm-12">
-            <button class="btn btn-success btnSubmitAdmin"><i class="glyphicon glyphicon-check"></i>&nbsp;SUBMIT</button>
+            <button class="btn btn-success btnSubmitAdmin"><i class="glyphicon glyphicon-saved"></i>&nbsp;SUBMIT</button>
             </div>    
           </div>
       </div>

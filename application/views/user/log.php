@@ -18,8 +18,8 @@
             </select>  
           </div>
           <div class="col-sm-8">
-             <button class="btn btn-sm pull-right btn-success btnPrint">Print</button>
-          <button class="btn btn-sm pull-right btn-success btnSaveChanges">Save Changes</button>
+             <button class="btn btn-sm  btn-warning btnPrint"><span class="glyphicon glyphicon-print"></span>&nbsp;&nbsp;Print</button>
+          <button class="btn btn-sm  btn-success btnSaveChanges"><span class="glyphicon glyphicon-save"></span>&nbsp;&nbsp;Save</button>
           </div>
         </div>
         <div class="row">

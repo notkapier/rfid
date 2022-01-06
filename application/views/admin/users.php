@@ -32,7 +32,7 @@
                           <button class="btn btn-sm btn-danger btnDisableUser" userid="<?php echo $row['id'];?>"><i class="glyphicon glyphicon-ban-circle"></i>&nbsp;DISABLE</button>
                         <?php 
                           }else {?>
-                          <button class="btn btn-sm btn-success btnEnableUser" userid="<?php echo $row['id'];?>" >enable</button>
+                          <button class="btn btn-sm btn-success btnEnableUser" userid="<?php echo $row['id'];?>"><i class="glyphicon glyphicon-check"></i>&nbsp;ENABLE</button>
                           <?php } ?>
                         <button class="btn btn-sm btn-warning btnEditUser" userid="<?php echo $row['id'];?>"><i class="glyphicon glyphicon-edit"></i>&nbsp;EDIT</button>
                         
@@ -108,7 +108,7 @@
       <div class="row pull-right">
         <div class="col-sm-12">
         <button class="btn btn-warning btnCancelUser"><i class="glyphicon glyphicon-remove"></i>&nbsp;CANCEL</button>
-        <button class="btn btn-success btnSubmitUser"><i class="glyphicon glyphicon-check"></i>&nbsp;SUBMIT</button>
+        <button class="btn btn-success btnSubmitUser"><i class="glyphicon glyphicon-saved"></i>&nbsp;SUBMIT</button>
         </div>    
       </div>
   </div>

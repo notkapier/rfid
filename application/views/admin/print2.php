@@ -3,7 +3,7 @@
 <!-- saved from url=(0043)file:///C:/Users/sff8300/Downloads/dtr.html -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<title>pdf-html</title>
+<title>Daily Time Record</title>
 <meta name="generator" content="BCL easyConverter SDK 5.0.252">
 <style type="text/css">
 

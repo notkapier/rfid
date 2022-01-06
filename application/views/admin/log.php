@@ -24,8 +24,8 @@
               <?php } ?>
             </select>  
           </div>
-          <button class="btn btn-sm pull-right btnPrint">Print</button>
-          <button class="btn btn-sm pull-right btn-success btnSaveChanges">Save Changes</button>  
+          <button class="btn btn-sm  btn-success btnSaveChanges"><span class="glyphicon glyphicon-save"></span>&nbsp;&nbsp;Save</button>  
+          <button class="btn btn-sm  btn-warning btnPrint"><span class="glyphicon glyphicon-print"></span>&nbsp;&nbsp;Print</button>
         </div>
         <div class="row" style="padding-top: 3vh">
           <div class="col-sm-12 myTable">
